@@ -3,10 +3,6 @@ import { AppRegistry, FlatList, StyleSheet, Text, View } from 'react-native';
 import Translate from './Translate';
 
 export default class TranslationList extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     return (
       <View style={styles.container}>
