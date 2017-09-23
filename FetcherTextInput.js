@@ -7,21 +7,18 @@ export default class FetcherTextInput extends Component {
     this.state = { text: '' };
   }
 
-  handleText(text) {
-    this.setState(text);
+  onSubmit(text) {
+    this.props.onSubmit(text);
   }
 
   render() {
     return (
       <View>
-        <Text
-          style={styles.text}>
-          Enter a word you dont know</Text>
+        <Text style={styles.text}>Enter a word you dont know</Text>
         <TextInput
           style={styles.input}
-          onChangeText={(text) => this.handleText({text})}
-          value={this.state.text}
-        />
+          onSubmitEditing={ (event) => this.onSubmit(event.nativeEvent.text)}/>
+        <Text style={styles.text}>{this.state.text}</Text>
       </View>
     );
   }

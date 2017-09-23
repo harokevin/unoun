@@ -2,3 +2,5 @@ node_modules/
 .expo/
 npm-debug.*
 unoun-0d11ac8fb22e.json
+.api_keys
+package-lock.json
