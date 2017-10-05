@@ -1,21 +1,22 @@
 import React, { Component } from 'react';
 import { AppRegistry, Text, View, StyleSheet, Dimensions } from 'react-native';
+//http://paletton.com/palette.php?uid=60g0L1karCN13P142KWifumq2t7k2QMV0jTq1gOY5vMbbyERk5ZajkQawe98Cdl69hK4Lk5jjb15TC84mbanpQcQuK
 
 export default class Translate extends Component {
   constructor(props) {
     super(props);
-    this.state = { value: this.props.value, translation: this.props.translation };
+    this.state = { original: this.props.original, translation: this.props.translation };
   }
 
   render() {
     return (
       <View style={styles.container}>
         <Text
-          style={styles.element}>
-          {this.state.value}</Text>
+          style={[styles.element, styles.originalElement]}>
+          {this.state.original}</Text>
         <Text
-          style={styles.element}
-          onPress={() => this.translate(this.state.value)}>
+          style={[styles.element, styles.tranlationElement]}
+          onPress={() => this.translate(this.state.original)}>
           {this.state.translation}</Text>
       </View>
     );
@@ -30,11 +31,18 @@ const styles = StyleSheet.create({
     padding: 2,
   },
   element: {
-    margin: 2,
-    width: Dimensions.get('window').width / 2 -6,
-    backgroundColor: '#f4f',
+    textAlign: 'center',
+    width: (Dimensions.get('window').width / 2) - 35,
+    borderColor: '#524D43',
+    borderWidth: 0.5,
     alignItems: 'center',
     justifyContent: 'center'
+  },
+  originalElement: {
+    marginRight: 5,
+  },
+  tranlationElement: {
+    marginLeft: 5,
   },
 });
 

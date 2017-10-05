@@ -8,7 +8,7 @@ export default class TranslationList extends Component {
       <View style={styles.container}>
         <FlatList
           data={this.props.translations}
-          renderItem={({item}) => <Translate value={item.original} translation={item.translation}/>}
+          renderItem={({item}) => <Translate original={item.original} translation={item.translation}/>}
         />
       </View>
     );

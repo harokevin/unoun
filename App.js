@@ -84,9 +84,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 150,
+    marginTop: 50,
   },
   input: {
-    marginBottom: 150
+    marginBottom: 50,
   },
 });
