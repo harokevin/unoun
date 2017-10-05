@@ -3,74 +3,69 @@ import { AsyncStorage, StyleSheet, Text, View } from 'react-native';
 import FetcherTextInput from './FetcherTextInput';
 import Translate from './Translate';
 import TranslationList from './TranslationList';
+import store from 'react-native-simple-store';
+import Translator from './Translator';
+
+const TRANSLATIONS = 'Translations';
 
 export default class App extends React.Component {
+
+
   constructor(props) {
     super(props)
     this.onSubmit = this.onSubmit.bind(this);
-    this.state = {translations: translations};
+    this.state = {translations: []};
   }
 
   async componentDidMount() {
-    const items = await this.getAllFromStorage();
-
+    const simpleStore = await store.get(TRANSLATIONS);
     this.setState( prevState => {
-      const newState = [...prevState.translations, ...items];
-      return {translations: newState};
+      return {translations: simpleStore};
     });
   }
 
-  addToTranslationList(text) {
+  addToTranslationList(packagedTranslation) {
     this.setState( prevState => {
-      newState = [{value: text, translation: ''}];
-      return {translations: [...prevState.translations, ...newState]};
-    });
-  }
+      let newTranslation = [packagedTranslation];
+      let existingTranslations = prevState.translations;
+      let noExistingTraslations = !prevState.translations;
 
-  async getAllFromStorage() {
-    try {
-      const keys  = await AsyncStorage.getAllKeys();
-      const allItems = await AsyncStorage.multiGet(keys);
-      const translationObjects = allItems.filter( storageItem => {
-        try {
-          const translationObject = JSON.parse(storageItem[1]);
-          return translationObject;
-        } catch(e) {
-          console.log(e + ": could not parse translation model with value: " + storageItem[1]);
-        }
-      }).map( storageItem => {
-        return JSON.parse(storageItem[1]);
-      });
-      return translationObjects;
-    } catch (error) {
-      console.log(e + ": could not fetch all items from AsyncStorage");
-    }
-  }
-
-  async getFromStorage(key) {
-    try {
-      const value = await AsyncStorage.getItem(key);
-      if (value !== null){
-        // We have data!!
-        console.log(value);
+      if(noExistingTraslations) {
+        return {translations: newTranslation};
+      } else {
+        return {translations: [...existingTranslations, ...newTranslation]};
       }
-    } catch (error) {
-      // Error retrieving data
-    }
+    });
   }
 
-  async setToStorage(key) {
-    item = "{\"value\": \"" + key + "\", \"translation\": \"" + key + "\"}";
+  async setToStorage(packagedTranslation) {
     try {
-      await AsyncStorage.setItem(key, item);
+      store.push(TRANSLATIONS, packagedTranslation);
     } catch (error) {
-      // Error saving data
+      console.log(e + " Could not persist translation:");
+      console.log(packagedTranslation);
     }
   }
 
-  onSubmit(text) {
-    this.addToTranslationList(text);
-    this.setToStorage(text);
+  async translateInput(input) {
+    let translator = new Translator();
+    try {
+      let translation = await translator.translate(input);
+      return translation;
+    } catch(e) {
+      console.log(e + " Could not translate input: " + input);
+    }
+  }
+
+  packageTranslation(input, translation) {
+    return { original: input, translation: translation, };
+  }
+
+  async onSubmit(input) {
+    let translation = await this.translateInput(input);
+    packagedTranslation = this.packageTranslation(input, translation);
+    await this.addToTranslationList(packagedTranslation);
+    await this.setToStorage(packagedTranslation);
   }
 
   render() {
@@ -83,21 +78,15 @@ export default class App extends React.Component {
   }
 }
 
-var translations = [
-  {value: 'a', translation: 't'},
-  {value: 'a', translation: 't'},
-  {value: 'a', translation: 't'}
-];
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 150
+    marginTop: 150,
   },
   input: {
     marginBottom: 150
-  }
+  },
 });

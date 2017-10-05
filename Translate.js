@@ -7,44 +7,6 @@ export default class Translate extends Component {
     this.state = { value: this.props.value, translation: this.props.translation };
   }
 
-  getTranslation(response) {
-    return response.data.translations[0].translatedText;
-  }
-
-  createRequest(value) {
-    let translateApiEndpoint = "https://translation.googleapis.com/language/translate/v2?"
-    let targetLanguage = "target="
-    let spanish = "es&";
-    let apiKey = "key=&";
-    let query = "q=";
-    let request = translateApiEndpoint + targetLanguage + spanish + apiKey + query + value;
-    return request;
-  }
-
-  handleRequest(request) {
-    return fetch(request).then((response) => {
-      return response.json();
-    }).then((response) => {
-      translation = this.getTranslation(response);
-      this.setState( prevState => {
-        return {translation: translation};
-      });
-    });
-  }
-
-  translate(value) {
-    try {
-      if (value) {
-        let request = this.createRequest(value);
-        this.handleRequest(request);
-      } else {
-        return '';
-      }
-    } catch(e) {
-      console.log(e);
-    }
-  }
-
   render() {
     return (
       <View style={styles.container}>
