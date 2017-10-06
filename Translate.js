@@ -8,15 +8,22 @@ export default class Translate extends Component {
     this.state = { original: this.props.original, translation: this.props.translation };
   }
 
+  /* _onDelete(translation) {
+  //   this.props.onDelete(translation);
+  // },*/
+
+  /* onPress={() => this._onDelete(this.state)}> */
+  
+
   render() {
     return (
-      <View style={styles.container}>
+      <View
+        style={styles.container}>
         <Text
           style={[styles.element, styles.originalElement]}>
           {this.state.original}</Text>
         <Text
-          style={[styles.element, styles.tranlationElement]}
-          onPress={() => this.translate(this.state.original)}>
+          style={[styles.element, styles.tranlationElement]}>
           {this.state.translation}</Text>
       </View>
     );
@@ -29,20 +36,22 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     padding: 2,
+    borderColor: '#524D43',
+    borderBottomWidth: 0.5,
   },
   element: {
-    textAlign: 'center',
-    width: (Dimensions.get('window').width / 2) - 35,
-    borderColor: '#524D43',
-    borderWidth: 0.5,
+    textAlign: 'left',
+    padding: 2,
+    paddingLeft: 15,
+    width: Dimensions.get('window').width,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    fontSize: 20,
   },
   originalElement: {
-    marginRight: 5,
   },
   tranlationElement: {
-    marginLeft: 5,
+    color: '#00B764',
   },
 });
 

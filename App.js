@@ -14,6 +14,7 @@ export default class App extends React.Component {
   constructor(props) {
     super(props)
     this.onSubmit = this.onSubmit.bind(this);
+    /* this.delete = this.delete.bind(this); */
     this.state = {translations: []};
   }
 
@@ -37,6 +38,16 @@ export default class App extends React.Component {
       }
     });
   }
+ /*
+  // removeFromTranslationList(packagedTranslation) {
+  //   // this.setState( prevState => {
+  //   //   let translationRemoved = prevState.filter( el => {
+  //   //     return packagedTranslation.original !== el.original
+  //   //            && packagedTranslation.translation !== el.translation;
+  //   //   });
+  //   //   return {translations: translationRemoved};
+  //   // });
+  // }*/
 
   async setToStorage(packagedTranslation) {
     try {
@@ -68,6 +79,11 @@ export default class App extends React.Component {
     await this.setToStorage(packagedTranslation);
   }
 
+  /* async delete(translation) {
+  //   // removeFromTranslationList(translation);
+  //   // store.delete(TRANSLATIONS, translation);
+  // },*/
+
   render() {
     return (
       <View style={styles.container}>
@@ -77,6 +93,7 @@ export default class App extends React.Component {
     );
   }
 }
+/* <TranslationList translations={this.state.translations} onDelete={this.delete}/>*/
 
 const styles = StyleSheet.create({
   container: {

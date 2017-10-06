@@ -14,6 +14,8 @@ export default class TranslationList extends Component {
     );
   }
 }
+/* renderItem={({item}) => <Translate original={item.original} translation={item.translation} onDelete={this.props.onDelete}/>}*/
+
 
 const styles = StyleSheet.create({
   container: {

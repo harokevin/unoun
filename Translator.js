@@ -7,7 +7,7 @@ export default class Translator{
     let translateApiEndpoint = "https://translation.googleapis.com/language/translate/v2?"
     let targetLanguage = "target="
     let spanish = "es&";
-    let apiKey = "key=&";
+    let apiKey = "key=AIzaSyCeOr_jm4FRum33JJEmTjxIPTrNQ2wdEWE&";
     let query = "q=";
     let request = translateApiEndpoint + targetLanguage + spanish + apiKey + query + value;
     return request;
